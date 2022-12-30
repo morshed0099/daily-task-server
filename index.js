@@ -87,31 +87,37 @@ async function run() {
             const result = await taksCollection.findOne(query)
             res.send(result);
         })
-        app.get('/completetask/:email',async(req,res)=>{
-            const email=req.params.email
-            const query={
+        app.get('/completetask/:email', async (req, res) => {
+            const email = req.params.email
+            const query = {
                 authorEmail: email,
                 complete: true
             }
             const result = await taksCollection.find(query).toArray()
             res.send(result);
         })
-        app.delete('/completetask/:id',async(req,res)=>{
-            const id=req.params.id
-            const query =({_id:ObjectId(id)})
-            const result=await taksCollection.deleteOne(query)
+        app.delete('/completetask/:id', async (req, res) => {
+            const id = req.params.id
+            const query = ({ _id: ObjectId(id) })
+            const result = await taksCollection.deleteOne(query)
             res.send(result);
         })
-        app.patch('/incomplete/:id',async(req,res)=>{
-            const id=req.params.id
-            const query=({_id:ObjectId(id)})
-            const complete=false
-            const updateDoc={
-                $set:{
-                    complete:complete
+        app.patch('/incomplete/:id', async (req, res) => {
+            const id = req.params.id
+            const query = ({ _id: ObjectId(id) })
+            const complete = false
+            const updateDoc = {
+                $set: {
+                    complete: complete
                 }
             }
-            const result=await taksCollection.updateOne(query,updateDoc)
+            const result = await taksCollection.updateOne(query, updateDoc)
+            res.send(result);
+        })
+        app.get('/details/:id', async (req, res) => {
+            const id = req.params.id
+            const query = ({ _id: ObjectId(id) })
+            const result = await taksCollection.find(query).toArray();
             res.send(result);
         })
 
