@@ -19,13 +19,11 @@ async function run() {
         app.post('/users', async (req, res) => {
             const query = req.body
             const result = await userCollection.insertOne(query);
-
             res.send(result);
         })
         app.post('/tasks', async (req, res) => {
             const query = req.body;
             const result = await taksCollection.insertOne(query);
-
             res.send(result);
         })
         app.get('/allTaks', async (req, res) => {
@@ -42,7 +40,6 @@ async function run() {
                 complete: false
             }
             const result = await taksCollection.find(query).toArray()
-
             res.send(result);
 
         })
@@ -87,6 +84,12 @@ async function run() {
             const result = await taksCollection.findOne(query)
             res.send(result);
         })
+        app.get('/details/:id', async (req, res) => {
+            const id = req.params.id
+            const query = ({ _id: ObjectId(id) })
+            const result = await taksCollection.find(query).toArray();
+            res.send(result);
+        })
         app.get('/completetask/:email', async (req, res) => {
             const email = req.params.email
             const query = {
@@ -114,17 +117,13 @@ async function run() {
             const result = await taksCollection.updateOne(query, updateDoc)
             res.send(result);
         })
-        app.get('/details/:id', async (req, res) => {
-            const id = req.params.id
-            const query = ({ _id: ObjectId(id) })
-            const result = await taksCollection.find(query).toArray();
-            res.send(result);
-        })
-
-    } finally {
+       
 
     }
-} run().catch(error => console.error(error))
+     finally {
+
+    }
+}run().catch(error => console.error(error))
 
 
 app.get('/', (req, res) => {
